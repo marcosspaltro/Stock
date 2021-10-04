@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:datagrid="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             x:Class="Stock.MainPage">
+
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="14" CornerRadius="0">
+            <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="26"/>
+        </Frame>
+       
+        <datagrid:DataGrid ItemsSource="{Binding Productos}" SelectionEnabled="True" SelectedItem="{Binding SelecionarProducto}" RowHeight="50" HeaderHeight="50"  
+                    BorderColor="#CCCCCC" HeaderBackground="#E0E6F8" PullToRefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" ActiveRowColor="#8899AA">
+            <x:Arguments>
+                <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+            </x:Arguments>
+            <datagrid:DataGrid.HeaderFontSize>
+                <OnIdiom x:TypeArguments="x:Double">
+                    <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                    <OnIdiom.Phone>12</OnIdiom.Phone>
+                </OnIdiom>
+            </datagrid:DataGrid.HeaderFontSize>
+            
+            <datagrid:DataGrid.Columns>
+                <datagrid:DataGridColumn Title="ID" PropertyName="ID" Width="0.5*"></datagrid:DataGridColumn>
+                <datagrid:DataGridColumn Title="Nombre" PropertyName="Nombre" Width="2*" HorizontalContentAlignment="Start"></datagrid:DataGridColumn>
+                <datagrid:DataGridColumn Title="Kilos" PropertyName="Kilos" Width="1*" >
+                    <datagrid:DataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Entry Text="{Binding}" Keyboard="Numeric"></Entry>
+                        </DataTemplate>
+                    </datagrid:DataGridColumn.CellTemplate>
+                </datagrid:DataGridColumn>                
+            </datagrid:DataGrid.Columns>
+            
+            <datagrid:DataGrid.RowsBackgroundColorPalette>
+                <datagrid:PaletteCollection>
+                    <Color>#F2F2F2</Color>
+                    <Color>#FFFFFF</Color>
+                </datagrid:PaletteCollection>
+            </datagrid:DataGrid.RowsBackgroundColorPalette>
+        </datagrid:DataGrid>
+    </StackLayout>
+
+</ContentPage>

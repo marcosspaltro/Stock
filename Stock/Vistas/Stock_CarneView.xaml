@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:datos="clr-namespace:Stock.Clases"
+             x:Class="Stock.Vistas.Stock_CarneView">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <datos:Stock_Data x:Key="stocksData"></datos:Stock_Data>
+            <DataTemplate x:Key="stockDataTemplate">
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <!--<Label Text="{Binding Producto}" Grid.Column="0"></Label>-->
+                        <StackLayout>
+                            <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20"></Label>                        
+                        </StackLayout>
+                        <Label Text="{Binding Kilos}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20"></Label>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+<ContentPage.Content>
+        <Grid Margin="10" BindingContext="{StaticResource stocksData}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout>            
+                
+            <Label Text="1. Los Alamos" FontSize="Subtitle" BackgroundColor="#0090D9" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
+                
+            <Frame BackgroundColor="#1871B7" Padding="10" CornerRadius="0">
+                <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
+            </Frame>
+            
+            <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True"></ListView>
+        </StackLayout>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
