@@ -11,13 +11,13 @@
                 <ViewCell>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.2*"></ColumnDefinition>                            
                         </Grid.ColumnDefinitions>
-                        <!--<Label Text="{Binding Producto}" Grid.Column="0"></Label>-->
-                        <StackLayout>
-                            <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20"></Label>                        
-                        </StackLayout>
-                        <Label Text="{Binding Kilos}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20"></Label>
+                        
+                        <Label Text="{Binding Producto}" Grid.Column="0" HorizontalOptions="Start"></Label>
+                        <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20" HorizontalOptions="Start"></Label>                                                
+                        <!--<Label Text="{Binding Kilos}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20"></Label>-->
+                        <Entry Text="{Binding Kilos, StringFormat='{}{0:N2'}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20" Keyboard="Numeric" IsReadOnly="True"></Entry>
                     </Grid>
                 </ViewCell>
             </DataTemplate>
@@ -36,7 +36,7 @@
                 <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
             </Frame>
             
-            <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True"></ListView>
+            <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True" SelectedItem="{Binding Registro_Seleccionado, Mode=TwoWay}"></ListView>
         </StackLayout>
             
         </Grid>

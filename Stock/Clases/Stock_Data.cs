@@ -10,6 +10,7 @@ namespace Stock.Clases
         public Stock datos = new Stock();
 
         private ObservableCollection<Stock> stocks;
+        private Stock registro_Seleccionado;
 
         public Stock_Data()
         {
@@ -46,27 +47,15 @@ namespace Stock.Clases
             }
         }
 
-        //public List<Stock> GetStockCarne()
-        //{
-        //    List<Stock> data = new List<Stock>();
-
-        //    DataTable dt = Stock_Carne();
-
-        //    for (int i = 0; i < dt.Rows.Count; i++)
-        //    {
-        //        var dato = new Stock();
-
-        //        dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
-        //        dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
-        //        dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
-
-
-        //        data.Add(dato);
-        //    }
-
-        //    return data;
-        //}
-
+        public Stock Registro_Seleccionado
+        {
+            get => registro_Seleccionado; set
+            {
+                if(value == registro_Seleccionado) { return; }
+                registro_Seleccionado = value;
+                OnPropertyChanged();
+            }
+        }
         private DataTable Stock_Carne()
         {
             string s = $"SELECT P.Id Prod, P.Nombre" +

@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Stock.Clases;
 
 namespace Stock.Vistas
 {
@@ -13,6 +14,9 @@ namespace Stock.Vistas
 
         }
 
-
+        private void lstItemsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            
+        }
     }
 }
