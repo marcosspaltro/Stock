@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Stock.Clases
+namespace Stock.Clases.Herramientas
 {
     public abstract class Notificable : INotifyPropertyChanged
     {

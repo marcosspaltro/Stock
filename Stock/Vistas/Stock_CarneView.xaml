@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:datos="clr-namespace:Stock.Clases"
-             x:Class="Stock.Vistas.Stock_CarneView">
+             x:Class="Stock.Vistas.Stock_CarneView"             
+             >
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -11,34 +12,39 @@
                 <ViewCell>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.2*"></ColumnDefinition>                            
+                            <ColumnDefinition Width=".2*"></ColumnDefinition>
+                            <ColumnDefinition Width="1.3*"></ColumnDefinition>
+                            <ColumnDefinition Width=".5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         
-                        <Label Text="{Binding Producto}" Grid.Column="0" HorizontalOptions="Start"></Label>
-                        <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20" HorizontalOptions="Start"></Label>                                                
-                        <!--<Label Text="{Binding Kilos}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20"></Label>-->
-                        <Entry Text="{Binding Kilos, StringFormat='{}{0:N2'}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20" Keyboard="Numeric" IsReadOnly="True"></Entry>
+                        <Label Text="{Binding Producto}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="End"></Label>
+                        <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20" HorizontalOptions="Start" VerticalOptions="End"></Label>
+                        <Entry Text="{Binding Kilos, StringFormat='{}{0:N2'}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20" Keyboard="Numeric" VerticalOptions="End" Completed="Entry_Completed"></Entry>
                     </Grid>
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
-<ContentPage.Content>
+    
+<ContentPage.Content>    
         <Grid Margin="10" BindingContext="{StaticResource stocksData}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackLayout>            
+            <StackLayout>
+                <Frame Grid.Row="0" BackgroundColor="{StaticResource Principal}" Padding="5" CornerRadius="100">
+                    <Label Text="{Binding Nombre_Sucursal}" FontSize="Subtitle" BackgroundColor="{StaticResource Principal}" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame Grid.Row="1" BackgroundColor="{StaticResource Secundario}" Padding="5" CornerRadius="10">
+                    <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
+                </Frame>
                 
-            <Label Text="1. Los Alamos" FontSize="Subtitle" BackgroundColor="#0090D9" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
-                
-            <Frame BackgroundColor="#1871B7" Padding="10" CornerRadius="0">
-                <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
-            </Frame>
-            
-            <ListView Grid.Row="1" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True" SelectedItem="{Binding Registro_Seleccionado, Mode=TwoWay}"></ListView>
-        </StackLayout>
-            
+                <ListView x:Name="grd" Grid.Row="2" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" 
+                          ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True" SelectedItem="{Binding Registro_Seleccionado, Mode=TwoWay}"></ListView>
+            </StackLayout>            
+               
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Stock.Clases.Herramientas;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
+using Xamarin.Forms;
 
 namespace Stock.Clases
 {
     public class Stock_Data : Notificable
     {
         readonly c_Base cbase = new c_Base();
-        public Stock datos = new Stock();
 
+        public Stock datos = new Stock();
+        private string nombre_Sucursal;
         private ObservableCollection<Stock> stocks;
         private Stock registro_Seleccionado;
 
@@ -16,8 +20,13 @@ namespace Stock.Clases
         {
             Stocks = new ObservableCollection<Stock>();
 
-            datos.Fecha = new DateTime(2021, 9, 26);
+
+            //Falta implementar la asignacion de estos dos
+            datos.Fecha = new DateTime(2021, 10, 18);
             datos.Sucursal = 1;
+
+            var ns = cbase.Dato_Generico("SELECT Nombre FROM Sucursales WHERE Id=" + datos.Sucursal);
+            nombre_Sucursal = $"{datos.Sucursal}. {ns}";
 
             DataTable dt = Stock_Carne();
 
@@ -33,8 +42,37 @@ namespace Stock.Clases
                 stocks.Add(dato);
             }
 
-            //Nos subscribimos al "Centro de Mensajes" para poder estar al tanto de las encuestas nuevas que se vayan agregando.
-            //MessagingCenter.Subscribe<ContentPage, Encuesta>(this, Mensajes.NuevaEncuestaCompleta, (sender, args) => { encuestas.Add(args); });
+
+            // Aca guardamos el dato.
+            MessagingCenter.Subscribe<Vistas.Stock_CarneView, Stock>(this, Literals.DatoModificado, (sender, args) =>
+            {
+                datos.Producto = args.Producto;
+                datos.Descripcion = args.Descripcion;
+                datos.Kilos = args.Kilos;
+                
+                Actualizar_Stock();
+            });
+        }
+
+        private void Actualizar_Stock()
+        {
+
+            string cm = $"DELETE FROM Stock WHERE Fecha='{datos.Fecha:MM/dd/yyyy}' AND ID_Sucursales={datos.Sucursal} AND ID_Productos={datos.Producto}";
+            cbase.Ejecutar_Comando(cm);
+
+            cm = $"INSERT INTO Stock (Fecha, ID_Sucursales, ID_Productos, Descripcion, Kilos) VALUES(" +
+                $"'{datos.Fecha:MM/dd/yyyy}', {datos.Sucursal}, {datos.Producto}, '{datos.Descripcion}', {datos.Kilos.ToString().Replace(",", ".")}" +
+                $")";
+            cbase.Ejecutar_Comando(cm);
+
+        }
+
+        private void PropiedadCambiada(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Kilos")
+            {
+                registro_Seleccionado.Kilos = 0;
+            }
         }
 
         public ObservableCollection<Stock> Stocks
@@ -43,7 +81,7 @@ namespace Stock.Clases
             {
                 if (value == stocks) { return; }
                 stocks = value;
-                OnPropertyChanged();
+
             }
         }
 
@@ -51,11 +89,14 @@ namespace Stock.Clases
         {
             get => registro_Seleccionado; set
             {
-                if(value == registro_Seleccionado) { return; }
+                if (value == registro_Seleccionado) { return; }
                 registro_Seleccionado = value;
-                OnPropertyChanged();
+
             }
         }
+
+        public string Nombre_Sucursal { get => nombre_Sucursal; set => nombre_Sucursal = value; }
+
         private DataTable Stock_Carne()
         {
             string s = $"SELECT P.Id Prod, P.Nombre" +

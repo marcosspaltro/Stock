@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Stock.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Color x:Key="Principal">#0090D9</Color>
+            <Color x:Key="Secundario">#1871B7</Color>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
