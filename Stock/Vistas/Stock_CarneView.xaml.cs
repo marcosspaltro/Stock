@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 namespace Stock.Vistas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Stock_CarneView : ContentPage
+    public partial class Stock_CarneView : CarouselPage
     {
 
 

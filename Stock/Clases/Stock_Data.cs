@@ -21,8 +21,9 @@ namespace Stock.Clases
             Stocks = new ObservableCollection<Stock>();
 
 
-            //Falta implementar la asignacion de estos dos
             datos.Fecha = new DateTime(2021, 10, 18);
+
+            //Falta implementar la asignacion de suc en una pantalla de login
             datos.Sucursal = 1;
 
             var ns = cbase.Dato_Generico("SELECT Nombre FROM Sucursales WHERE Id=" + datos.Sucursal);

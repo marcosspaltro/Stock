@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:datos="clr-namespace:Stock.Clases"
-             x:Class="Stock.Vistas.Stock_CarneView"             
+             x:Class="Stock.Vistas.Stock_CarneView"              
              >
 
-    <ContentPage.Resources>
+    <CarouselPage.Resources>
         <ResourceDictionary>
             <datos:Stock_Data x:Key="stocksData"></datos:Stock_Data>
             <DataTemplate x:Key="stockDataTemplate">
@@ -24,9 +24,9 @@
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
-    </ContentPage.Resources>
-    
-<ContentPage.Content>    
+    </CarouselPage.Resources>
+
+    <ContentPage>    
         <Grid Margin="10" BindingContext="{StaticResource stocksData}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -37,14 +37,36 @@
                 <Frame Grid.Row="0" BackgroundColor="{StaticResource Principal}" Padding="5" CornerRadius="100">
                     <Label Text="{Binding Nombre_Sucursal}" FontSize="Subtitle" BackgroundColor="{StaticResource Principal}" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
                 </Frame>
-                <Frame Grid.Row="1" BackgroundColor="{StaticResource Secundario}" Padding="5" CornerRadius="10">
+                <Frame Grid.Row="1" BackgroundColor="{StaticResource StockCarne}" Padding="5" CornerRadius="10">
                     <Label Text="Stock Carne" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
                 </Frame>
                 
-                <ListView x:Name="grd" Grid.Row="2" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" 
+                <ListView Grid.Row="2" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" 
                           ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True" SelectedItem="{Binding Registro_Seleccionado, Mode=TwoWay}"></ListView>
             </StackLayout>            
                
         </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    </ContentPage>
+    
+    <ContentPage>
+        <Grid Margin="10" BindingContext="{StaticResource stocksData}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout>
+                <Frame Grid.Row="0" BackgroundColor="{StaticResource Principal}" Padding="5" CornerRadius="100">
+                    <Label Text="{Binding Nombre_Sucursal}" FontSize="Subtitle" BackgroundColor="{StaticResource Principal}" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
+                </Frame>
+                <Frame Grid.Row="1" BackgroundColor="{StaticResource StockMenudencias}" Padding="5" CornerRadius="10">
+                    <Label Text="Stock Menudencias" HorizontalTextAlignment="Center" TextColor="White" FontSize="20"/>
+                </Frame>
+
+                <ListView Grid.Row="2" ItemsSource="{Binding Stocks}" HorizontalOptions="Fill" 
+                          ItemTemplate="{StaticResource stockDataTemplate}" HasUnevenRows="True" SelectedItem="{Binding Registro_Seleccionado, Mode=TwoWay}"></ListView>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage>
+</CarouselPage>
