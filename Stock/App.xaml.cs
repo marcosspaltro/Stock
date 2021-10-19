@@ -13,6 +13,9 @@ namespace Stock
 
             InitializeComponent();
 
+            var userSelectedCulture = new CultureInfo("es-AR");
+            Thread.CurrentThread.CurrentCulture = userSelectedCulture;
+
             MainPage = new Stock_CarneView();
 
 
@@ -20,8 +23,8 @@ namespace Stock
 
         protected override void OnStart()
         {
-            var userSelectedCulture = new CultureInfo("es-AR");
-            Thread.CurrentThread.CurrentCulture = userSelectedCulture;
+            //var userSelectedCulture = new CultureInfo("es-AR");
+            //Thread.CurrentThread.CurrentCulture = userSelectedCulture;
         }
 
         protected override void OnSleep()

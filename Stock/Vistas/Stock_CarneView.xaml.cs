@@ -22,5 +22,15 @@ namespace Stock.Vistas
 
             MessagingCenter.Send(this, Literals.DatoModificado, st);
         }
+
+        private void Entry_Focused(object sender, FocusEventArgs e)
+        {
+            Dispatcher.BeginInvokeOnMainThread(() =>
+            {
+                Entry MyEntry = (Entry)sender;
+                MyEntry.CursorPosition = 0;
+                MyEntry.SelectionLength = MyEntry.Text != null ? MyEntry.Text.Length : 0;
+            });
+        }
     }
 }

@@ -7,12 +7,11 @@
             <Color x:Key="Principal">#0090D9</Color>
             <Color x:Key="Secundario">#1871B7</Color>
 
-            <Color x:Key="StockCarne">#0090D9</Color>
-            <Color x:Key="StockMenudencias">#0090D9</Color>
-            <Color x:Key="StockGranja">#0090D9</Color>
-            <Color x:Key="StockMenudencias">#0090D9</Color>
-            <Color x:Key="StockEmbutidos">#0090D9</Color>
-            <Color x:Key="StockOtros">#0090D9</Color>
+            <Color x:Key="Carne">#F05500</Color>
+            <Color x:Key="Menudencias">#FF6B00</Color>
+            <Color x:Key="Granja">#FFAF00</Color>
+            <Color x:Key="Embutidos">#CC8C00</Color>
+            <Color x:Key="Otros">#996900</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

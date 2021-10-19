@@ -3,6 +3,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
+using System.Net;
 using Xamarin.Forms;
 
 namespace Stock.Clases
@@ -12,24 +14,37 @@ namespace Stock.Clases
         readonly c_Base cbase = new c_Base();
 
         public Stock datos = new Stock();
-        private string nombre_Sucursal;
-        private ObservableCollection<Stock> stocks;
+        private string Titulo;
+        private ObservableCollection<Stock> stocksCarne;
+        private ObservableCollection<Stock> stocksMen;
         private Stock registro_Seleccionado;
 
         public Stock_Data()
         {
-            Stocks = new ObservableCollection<Stock>();
+            StockCarne = new ObservableCollection<Stock>();
+            StockMen = new ObservableCollection<Stock>();
+            
+            //Se setea la fecha al domingo de la semana anterior. 
+            double d = Convert.ToDouble(DateTime.Today.DayOfWeek);
+            
+            //Chequear que no sea mayor a martes.
+            if(d > 2) 
+            { 
+                
+            }
+            datos.Fecha = DateTime.Today.AddDays(d * -1);
+
+            var IpAddress = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
+
+            //Chequear que haya encontrado la ip
+            var ns = cbase.Dato_Generico($"SELECT Id FROM Sucursales WHERE Ip='{IpAddress}'");
+            datos.Sucursal = Convert.ToInt32(ns);
+
+            ns = cbase.Dato_Generico("SELECT Nombre FROM Sucursales WHERE Id=" + datos.Sucursal);
+            Titulo = $"{datos.Sucursal}. {ns}  -  {datos.Fecha.AddDays(1):dd/MM}";
 
 
-            datos.Fecha = new DateTime(2021, 10, 18);
-
-            //Falta implementar la asignacion de suc en una pantalla de login
-            datos.Sucursal = 1;
-
-            var ns = cbase.Dato_Generico("SELECT Nombre FROM Sucursales WHERE Id=" + datos.Sucursal);
-            nombre_Sucursal = $"{datos.Sucursal}. {ns}";
-
-            DataTable dt = Stock_Carne();
+            DataTable dt = Stock_tipo(1);
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -40,7 +55,21 @@ namespace Stock.Clases
                 dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
 
 
-                stocks.Add(dato);
+                stocksCarne.Add(dato);
+            }
+
+            dt = Stock_tipo(2);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                var dato = new Stock();
+
+                dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
+                dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
+                dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
+
+
+                stocksMen.Add(dato);
             }
 
 
@@ -50,7 +79,17 @@ namespace Stock.Clases
                 datos.Producto = args.Producto;
                 datos.Descripcion = args.Descripcion;
                 datos.Kilos = args.Kilos;
-                
+
+                Actualizar_Stock();
+            });
+
+            // Ponemos el dato en cero.
+            MessagingCenter.Subscribe<Vistas.Stock_CarneView, Stock>(this, Literals.BotonBorrar, (sender, args) =>
+            {
+                datos.Producto = args.Producto;
+                datos.Descripcion = args.Descripcion;
+                datos.Kilos = 0;
+
                 Actualizar_Stock();
             });
         }
@@ -76,12 +115,21 @@ namespace Stock.Clases
             }
         }
 
-        public ObservableCollection<Stock> Stocks
+        public ObservableCollection<Stock> StockCarne
         {
-            get => stocks; set
+            get => stocksCarne; set
             {
-                if (value == stocks) { return; }
-                stocks = value;
+                if (value == stocksCarne) { return; }
+                stocksCarne = value;
+
+            }
+        }
+        public ObservableCollection<Stock> StockMen
+        {
+            get => stocksMen; set
+            {
+                if (value == stocksMen) { return; }
+                stocksMen = value;
 
             }
         }
@@ -96,18 +144,19 @@ namespace Stock.Clases
             }
         }
 
-        public string Nombre_Sucursal { get => nombre_Sucursal; set => nombre_Sucursal = value; }
+        public string Nombre_Sucursal { get => Titulo; set => Titulo = value; }
 
-        private DataTable Stock_Carne()
+        private DataTable Stock_tipo(int tipo = 0)
         {
             string s = $"SELECT P.Id Prod, P.Nombre" +
                 $", ISNULL((SELECT S.Kilos FROM Stock S WHERE S.Fecha = '{datos.Fecha:MM/dd/yy}' AND S.Id_Sucursales = {datos.Sucursal} AND S.Id_Productos = P.Id), 0) Kilos" +
                 $" FROM Productos P " +
-                $" WHERE (P.ID_Tipo = 1) AND (P.Ver = 1)";
+                $" WHERE (P.ID_Tipo = {tipo}) AND (P.Ver = 1)";
             DataTable dt = cbase.Datos_Genericos(s);
             return dt;
 
         }
+        
     }
 
 
