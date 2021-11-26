@@ -1,25 +1,28 @@
 ﻿using Stock.Clases.Herramientas;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Stock.Vistas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Stock_CarneView : CarouselPage
+    public partial class Page1 : ContentPage
     {
-
-
-        public Stock_CarneView()
+        public Page1()
         {
             InitializeComponent();
-
         }
 
         private void Entry_Completed(object sender, System.EventArgs e)
         {
             var id = (Entry)sender;
             Clases.Stock st = (Clases.Stock)id.BindingContext;
-
+            st.Asignar_Tipo();
             MessagingCenter.Send(this, Literals.DatoModificado, st);
         }
 

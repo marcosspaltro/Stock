@@ -136,7 +136,7 @@ namespace Stock.Clases
 
                 sql.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
             }
@@ -162,7 +162,7 @@ namespace Stock.Clases
 
                 sql.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //MessageBox.Show(e.Message, "Error");
             }

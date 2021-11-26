@@ -12,6 +12,7 @@
             <Color x:Key="Granja">#FFAF00</Color>
             <Color x:Key="Embutidos">#CC8C00</Color>
             <Color x:Key="Otros">#996900</Color>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

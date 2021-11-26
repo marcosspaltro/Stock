@@ -9,28 +9,31 @@ using Xamarin.Forms;
 
 namespace Stock.Clases
 {
-    public class Stock_Data : Notificable
+    public class Stock_DatosPagina : Notificable
     {
+        private int tipo;
+
         readonly c_Base cbase = new c_Base();
 
         public Stock datos = new Stock();
         private string Titulo;
-        private ObservableCollection<Stock> stocksCarne;
-        private ObservableCollection<Stock> stocksMen;
+        private ObservableCollection<Stock> stocks;
         private Stock registro_Seleccionado;
 
-        public Stock_Data()
+        public Stock_DatosPagina()
         {
-            StockCarne = new ObservableCollection<Stock>();
-            StockMen = new ObservableCollection<Stock>();
-            
+        }
+
+        public void cargar()
+        {
+            Stock = new ObservableCollection<Stock>();
             //Se setea la fecha al domingo de la semana anterior. 
             double d = Convert.ToDouble(DateTime.Today.DayOfWeek);
-            
+
             //Chequear que no sea mayor a martes.
-            if(d > 2) 
-            { 
-                
+            if (d > 2)
+            {
+
             }
             datos.Fecha = DateTime.Today.AddDays(d * -1);
 
@@ -43,22 +46,7 @@ namespace Stock.Clases
             ns = cbase.Dato_Generico("SELECT Nombre FROM Sucursales WHERE Id=" + datos.Sucursal);
             Titulo = $"{datos.Sucursal}. {ns}  -  {datos.Fecha.AddDays(1):dd/MM}";
 
-
-            DataTable dt = Stock_tipo(1);
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                var dato = new Stock();
-
-                dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
-                dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
-                dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
-
-
-                stocksCarne.Add(dato);
-            }
-
-            dt = Stock_tipo(2);
+            DataTable dt = Stock_tipo(tipo);
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -68,23 +56,43 @@ namespace Stock.Clases
                 dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
                 dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
 
-
-                stocksMen.Add(dato);
+                stocks.Add(dato);
             }
 
 
             // Aca guardamos el dato.
-            MessagingCenter.Subscribe<Vistas.Stock_CarneView, Stock>(this, Literals.DatoModificado, (sender, args) =>
+            MessagingCenter.Subscribe<Vistas.Page1, Stock>(this, Literals.DatoModificado, async(sender, args) =>
             {
-                datos.Producto = args.Producto;
-                datos.Descripcion = args.Descripcion;
-                datos.Kilos = args.Kilos;
+                if (DateTime.Today <= datos.Fecha.AddDays(-2))
+                {
+                    datos.Producto = args.Producto;
+                    datos.Descripcion = args.Descripcion;
+                    datos.Kilos = args.Kilos;
 
-                Actualizar_Stock();
+                    Actualizar_Stock();
+                }
+                else
+                {
+                    if (args.Tipo == tipo)
+                    { 
+                    await Application.Current.MainPage.DisplayAlert("Carga Invalida", "Ya no es posible Editar el Stock", "OK");
+                        stocks.Clear();
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            var dato = new Stock();
+
+                            dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
+                            dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
+                            dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
+
+                            stocks.Add(dato);
+                        }
+                    }
+                }
             });
 
             // Ponemos el dato en cero.
-            MessagingCenter.Subscribe<Vistas.Stock_CarneView, Stock>(this, Literals.BotonBorrar, (sender, args) =>
+            MessagingCenter.Subscribe<Vistas.Page1, Stock>(this, Literals.BotonBorrar, (sender, args) =>
             {
                 datos.Producto = args.Producto;
                 datos.Descripcion = args.Descripcion;
@@ -96,7 +104,6 @@ namespace Stock.Clases
 
         private void Actualizar_Stock()
         {
-
             string cm = $"DELETE FROM Stock WHERE Fecha='{datos.Fecha:MM/dd/yyyy}' AND ID_Sucursales={datos.Sucursal} AND ID_Productos={datos.Producto}";
             cbase.Ejecutar_Comando(cm);
 
@@ -104,7 +111,6 @@ namespace Stock.Clases
                 $"'{datos.Fecha:MM/dd/yyyy}', {datos.Sucursal}, {datos.Producto}, '{datos.Descripcion}', {datos.Kilos.ToString().Replace(",", ".")}" +
                 $")";
             cbase.Ejecutar_Comando(cm);
-
         }
 
         private void PropiedadCambiada(object sender, PropertyChangedEventArgs e)
@@ -115,25 +121,15 @@ namespace Stock.Clases
             }
         }
 
-        public ObservableCollection<Stock> StockCarne
+        public ObservableCollection<Stock> Stock
         {
-            get => stocksCarne; set
+            get => stocks; set
             {
-                if (value == stocksCarne) { return; }
-                stocksCarne = value;
+                if (value == stocks) { return; }
+                stocks = value;
 
             }
         }
-        public ObservableCollection<Stock> StockMen
-        {
-            get => stocksMen; set
-            {
-                if (value == stocksMen) { return; }
-                stocksMen = value;
-
-            }
-        }
-
         public Stock Registro_Seleccionado
         {
             get => registro_Seleccionado; set
@@ -145,6 +141,8 @@ namespace Stock.Clases
         }
 
         public string Nombre_Sucursal { get => Titulo; set => Titulo = value; }
+        public int Tipo{ get => tipo; set {  tipo = value;  cargar(); } }
+
 
         private DataTable Stock_tipo(int tipo = 0)
         {
@@ -156,7 +154,7 @@ namespace Stock.Clases
             return dt;
 
         }
-        
+
     }
 
 

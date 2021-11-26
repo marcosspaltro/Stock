@@ -50,7 +50,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
             }
@@ -73,7 +73,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -97,7 +97,7 @@
                 cnn.Close();
                 ID = Max_ID();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -128,7 +128,7 @@
                 cnn.Close();
                 ID = Max_ID();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -155,7 +155,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -178,7 +178,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -201,7 +201,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -220,7 +220,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }
@@ -556,7 +556,7 @@
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -589,7 +589,7 @@
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -624,7 +624,7 @@
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -676,7 +676,7 @@
 
                 cnn.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }

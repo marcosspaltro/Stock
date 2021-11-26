@@ -121,7 +121,7 @@
 
                 sql.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //MessageBox.Show(e.Message, "Error");
             }
@@ -148,7 +148,7 @@
 
                 sql.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //MessageBox.Show(e.Message, "Error");
             }
