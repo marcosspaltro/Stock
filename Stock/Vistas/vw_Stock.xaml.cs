@@ -11,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace Stock.Vistas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Page1 : ContentPage
+    public partial class vw_Stock : ContentPage
     {
-        public Page1()
+        public vw_Stock()
         {
             InitializeComponent();
         }

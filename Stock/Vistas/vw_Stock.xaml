@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:datos="clr-namespace:Stock.Clases"
-             x:Class="Stock.Vistas.Page1"  Title="Hola"            
+             x:Class="Stock.Vistas.vw_Stock"  Title="Hola"            
              >
 
     <ContentPage.Resources>
@@ -20,13 +20,14 @@
 
                         <Label Text="{Binding Producto}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="End"></Label>
                         <Label Text="{Binding Descripcion}" Grid.Column="1" FontSize="20" HorizontalOptions="Center" VerticalOptions="End"></Label>
-                        <Entry Text="{Binding Kilos, StringFormat='{}{0:N2'}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20" Keyboard="Numeric" VerticalOptions="End" Focused="Entry_Focused" Completed="Entry_Completed"></Entry>
+                        <Entry Text="{Binding Kilos, StringFormat='{0:N2}'}" Grid.Column="2" HorizontalTextAlignment="End" FontSize="20" Keyboard="Numeric" VerticalOptions="End" Focused="Entry_Focused" Completed="Entry_Completed"></Entry>
                     </Grid>
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid Margin="10" BindingContext="{StaticResource stocksData}">
+        
         <StackLayout>
             <Frame Grid.Row="0" BackgroundColor="{StaticResource Principal}" Padding="5" CornerRadius="100">
                 <Label Text="{Binding Nombre_Sucursal}" FontSize="Subtitle" BackgroundColor="{StaticResource Principal}" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>

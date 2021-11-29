@@ -27,14 +27,14 @@ namespace Stock
             CarouselPage carouselPage = new CarouselPage();
             DataTable dtt = cbase.Datos_Genericos("SELECT Id, Nombre FROM TipoProductos");
             for (int j = 0; j < dtt.Rows.Count; j++)
-            { 
+            {
                 Resources.Remove("stockicon");
                 Resources.Add("stockicon", $"it{Convert.ToInt32(dtt.Rows[j]["Id"])}.jpg");
                 Resources.Remove("Eltipo");
                 Resources.Add("Eltipo", Convert.ToInt32(dtt.Rows[j]["Id"]));
                 Resources.Remove("Nomtipo");
                 Resources.Add("Nomtipo", "Stock " + dtt.Rows[j]["Nombre"].ToString());
-                carouselPage.Children.Add(new Page1());
+                carouselPage.Children.Add(new vw_Stock());
             }
             MainPage = new NavigationPage(carouselPage);
             //var userSelectedCulture = new CultureInfo("es-AR");

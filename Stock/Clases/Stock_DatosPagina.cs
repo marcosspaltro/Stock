@@ -61,7 +61,7 @@ namespace Stock.Clases
 
 
             // Aca guardamos el dato.
-            MessagingCenter.Subscribe<Vistas.Page1, Stock>(this, Literals.DatoModificado, async(sender, args) =>
+            MessagingCenter.Subscribe<Vistas.vw_Stock, Stock>(this, Literals.DatoModificado, async(sender, args) =>
             {
                 if (DateTime.Today <= datos.Fecha.AddDays(-2))
                 {
@@ -80,7 +80,7 @@ namespace Stock.Clases
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
                             var dato = new Stock();
-
+                            dato.Tipo = tipo;
                             dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
                             dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
                             dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
@@ -92,7 +92,7 @@ namespace Stock.Clases
             });
 
             // Ponemos el dato en cero.
-            MessagingCenter.Subscribe<Vistas.Page1, Stock>(this, Literals.BotonBorrar, (sender, args) =>
+            MessagingCenter.Subscribe<Vistas.vw_Stock, Stock>(this, Literals.BotonBorrar, (sender, args) =>
             {
                 datos.Producto = args.Producto;
                 datos.Descripcion = args.Descripcion;

@@ -19,10 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Vistas\Page1.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Vistas\Page2.xaml">
+    <EmbeddedResource Update="Vistas\vw_Stock.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -38,5 +35,11 @@
       <Private>false</Private>
       <EmbedInteropTypes>false</EmbedInteropTypes>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Vistas\vw_Stock.xaml.cs">
+      <DependentUpon>vw_Stock.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

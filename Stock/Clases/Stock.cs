@@ -9,13 +9,12 @@
         public DateTime Fecha { get; set; }
         public int Producto { get; set; }
         public int Sucursal { get; set; }
-        public int Tipo { get; set; }
         public string Descripcion { get; set; }
-
+        public int Tipo { get; set; }
         public void Asignar_Tipo()
         {
             c_Base cbase = new c_Base();
-            Tipo = 1;
+            Tipo = Convert.ToInt32(cbase.Dato_Generico($"SELECT Id_Tipo FROM Productos WHERE Id= {Producto}"));
         }
 
         public float Kilos
