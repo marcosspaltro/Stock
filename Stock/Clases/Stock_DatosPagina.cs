@@ -100,6 +100,25 @@ namespace Stock.Clases
 
                 Actualizar_Stock();
             });
+
+            MessagingCenter.Subscribe<Vistas.vw_Stock, Stock>(this, Literals.Actualizar_grd, (sender, args) =>
+            {
+                if (args.Tipo == tipo)
+                {
+                    stocks.Clear();
+                    dt = Stock_tipo(tipo);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        var dato = new Stock();
+                        dato.Tipo = tipo;
+                        dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
+                        dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
+                        dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
+
+                        stocks.Add(dato);
+                    }
+                }
+            });
         }
 
         private void Actualizar_Stock()

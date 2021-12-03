@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -34,6 +34,16 @@ namespace Stock.Vistas
                 MyEntry.CursorPosition = 0;
                 MyEntry.SelectionLength = MyEntry.Text != null ? MyEntry.Text.Length : 0;
             });
+        }
+
+
+        async void Refresh_grd(object sender, EventArgs e)
+        {
+            string stockt = lbl1.Text.Substring(6);
+            Clases.Stock st = new Clases.Stock();
+            st.Asignar_Tipo(stockt);
+            MessagingCenter.Send(this, Literals.Actualizar_grd, st);
+            My_Refresh_grd.IsRefreshing = false;
         }
     }
 }

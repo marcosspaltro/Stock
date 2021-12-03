@@ -26,8 +26,11 @@ namespace Stock
             //dejar como estaba antes y poner un msj para ver el error
             CarouselPage carouselPage = new CarouselPage();
             DataTable dtt = cbase.Datos_Genericos("SELECT Id, Nombre FROM TipoProductos");
+            Random rd = new Random();
             for (int j = 0; j < dtt.Rows.Count; j++)
             {
+                Resources.Remove("Carne");
+                Resources.Add("Carne", Color.FromRgb(rd.Next(256), rd.Next(256), rd.Next(256)));
                 Resources.Remove("stockicon");
                 Resources.Add("stockicon", $"it{Convert.ToInt32(dtt.Rows[j]["Id"])}.jpg");
                 Resources.Remove("Eltipo");

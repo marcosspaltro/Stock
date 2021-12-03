@@ -74,6 +74,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.116</Version>
     </PackageReference>
@@ -151,10 +154,13 @@
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\it8.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionStockAndroidHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarStockAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarStockAndroidHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionStockAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

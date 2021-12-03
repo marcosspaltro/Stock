@@ -11,10 +11,17 @@
         public int Sucursal { get; set; }
         public string Descripcion { get; set; }
         public int Tipo { get; set; }
-        public void Asignar_Tipo()
+        public void Asignar_Tipo(string stockt = "")
         {
             c_Base cbase = new c_Base();
-            Tipo = Convert.ToInt32(cbase.Dato_Generico($"SELECT Id_Tipo FROM Productos WHERE Id= {Producto}"));
+            if (stockt == "")
+            {
+                Tipo = Convert.ToInt32(cbase.Dato_Generico($"SELECT Id_Tipo FROM Productos WHERE Id= {Producto}"));
+            }
+            else
+            { 
+            Tipo = Convert.ToInt32(cbase.Dato_Generico($"SELECT Id FROM TipoProductos WHERE Nombre= '{stockt}'"));
+            }
         }
 
         public float Kilos
