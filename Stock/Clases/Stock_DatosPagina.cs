@@ -50,12 +50,12 @@ namespace Stock.Clases
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                var dato = new Stock();
-
-                dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
-                dato.Descripcion = dt.Rows[i]["Nombre"].ToString();
-                dato.Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"]);
-
+                var dato = new Stock
+                {
+                    Producto = Convert.ToInt32(dt.Rows[i]["Prod"]),
+                    Descripcion = dt.Rows[i]["Nombre"].ToString(),
+                    Kilos = Convert.ToSingle(dt.Rows[i]["Kilos"])
+                };
                 stocks.Add(dato);
             }
 
@@ -77,9 +77,9 @@ namespace Stock.Clases
                     { 
                     await Application.Current.MainPage.DisplayAlert("Carga Invalida", "Ya no es posible Editar el Stock", "OK");
                         stocks.Clear();
+                        var dato = new Stock();
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            var dato = new Stock();
                             dato.Tipo = tipo;
                             dato.Producto = Convert.ToInt32(dt.Rows[i]["Prod"]);
                             dato.Descripcion = dt.Rows[i]["Nombre"].ToString();

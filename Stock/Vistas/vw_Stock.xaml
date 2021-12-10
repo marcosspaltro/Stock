@@ -31,7 +31,7 @@
             <Frame Grid.Row="0" BackgroundColor="{StaticResource Principal}" Padding="5" CornerRadius="100">
                 <Label Text="{Binding Nombre_Sucursal}" FontSize="Subtitle" BackgroundColor="{StaticResource Principal}" TextColor="#FFFFFF" HorizontalTextAlignment="Center"></Label>
             </Frame>
-            <Frame Grid.Row="1" BackgroundColor="{StaticResource Carne}" Padding="5" CornerRadius="10">
+            <Frame Grid.Row="1" BackgroundColor="{StaticResource ColorT}" Padding="5" CornerRadius="10">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center"  VerticalOptions="Center" HeightRequest="32"  >
                     <Label  x:Name="lbl1" Text="{StaticResource Nomtipo}" HorizontalTextAlignment="Center" TextColor="White" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Image Source="{StaticResource stockicon}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" HeightRequest="20" />
